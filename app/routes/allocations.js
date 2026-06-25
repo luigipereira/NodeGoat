@@ -9,12 +9,9 @@ function AllocationsHandler(db) {
     const allocationsDAO = new AllocationsDAO(db);
 
     this.displayAllocations = (req, res, next) => {
-        /*
-        // Fix for A4 Insecure DOR -  take user id from session instead of from URL param
+        // Fix for Reflected XSS (and IDOR): take userId from the authenticated
+        // session instead of the URL, so it cannot be controlled by the attacker.
         const { userId } = req.session;
-        */
-        // Fix for Reflected XSS: treat userId as an integer (sanitizes the URL input)
-        const userId = parseInt(req.params.userId, 10);
         const {
             threshold
         } = req.query;
