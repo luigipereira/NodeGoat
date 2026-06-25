@@ -13,9 +13,8 @@ function AllocationsHandler(db) {
         // Fix for A4 Insecure DOR -  take user id from session instead of from URL param
         const { userId } = req.session;
         */
-        const {
-            userId
-        } = req.params;
+        // Fix for Reflected XSS: treat userId as an integer (sanitizes the URL input)
+        const userId = parseInt(req.params.userId, 10);
         const {
             threshold
         } = req.query;
